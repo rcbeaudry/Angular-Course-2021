@@ -1,0 +1,10 @@
+<h1>Welcome to the Game!!</h1>
+<app-game-control (timerTick)="onTimerTick($event)"></app-game-control>
+<div *ngFor = "let tick of timerTicks">
+    <div *ngIf="tick % 2 === 0; else elseBlock"> 
+        <app-even [tickVal]="tick"></app-even>
+    </div>
+    <ng-template #elseBlock>
+        <app-odd [tickVal]="tick"></app-odd>
+    </ng-template>
+</div>

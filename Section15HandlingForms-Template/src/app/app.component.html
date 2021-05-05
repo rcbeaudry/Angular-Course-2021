@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!-- Note form tag has no action, nor any GET/POST... We do NOT want to actually submit the form and make an-->
+      <!-- HTTP request.  We want Angular to handle the form submit, and stay on the same page-->      
+      <!-- Angular adds ngSubmit event, so we can add to form tag to let Angular handle the submit-->
+      <!-- The #f="" and passing f as param are Angular pieces to get access to the JS/TS form object-->
+      <!-- that was created automagically by Angular -->
+
+      <!-- Since there is a local reference now, we could skip passing f, and use @ViewChild in our component.ts code-->
+      <!-- useful if we want to see the form at some other time than the submittal time-->
+      <!-- form tag changes to <form (ngSubmit)="onSubmitWithViewChild()" #f="ngForm"> -->
+
+      <!-- When Angular sees the form tag, it automagically creates a JS/TS representation of the form -->
+      <!-- However, it does not scan controls/inputs.  Those must be registered manually -->
+      <!-- (maybe a dropdown only affects some other part of the form, or a 3rd party control is in use) -->
+      <!-- you may not want/need all the controls on the form to be represented; hence, manual registration -->
+      <!-- adding ngModel and name attributes registers the controls to Angular -->
+
+      <!-- The required tag on email and username is am HTML attribute, but when Angular sees it, it will act like a -->
+      <!-- selector, and Angular will not set the form valid or the field valid until there is some input there-->
+      <!-- The email tag is an Angular directive, which will trigger email validation rules.  Form and input will not -->
+      <!-- be valid until a valid email is entered-->
+      <!-- See README.md for notes on validators -->
+
+      <!-- Binding with ngModel: -->
+      <!-- The #email="ngModel" is setting a local reference, but also exposes the underlying JS object, -->
+      <!-- so we can inspect it in the ngIf in the span below (no binding)-->
+      <!-- In the "secret" dropdown, the [ngModel]="defaultQuestion" is a one-way property bind to set a default value-->
+      <!-- In the "questionAnswer" text area, [(ngModel)]="answer" is a two-way bind to set property and display below-->
+
+      <!-- The ngModelGroup on user-data is a way to group form controls for separate section-based validation or control -->
+      <!-- attributes are added to the group as with the controls (eg., ng-dirty, ng-touched, ng-valid)-->
+      <!-- You can then add a local reference and set to ngModelGroup, and like the email local reference, this will give-->
+      <!-- you access to the JS object underneath-->
+
+      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div id="user-data" ngModelGroup="userData" #userData="ngModelGroup">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" class="form-control" ngModel name="username" required>
+          </div>
+          <button class="btn btn-default" type="button" (click)="suggestUserName()">Suggest an Username</button>
+          <div class="form-group">
+            <label for="email">Mail</label>
+            <input type="email" id="email" class="form-control" ngModel name="email" required email #email="ngModel">
+            <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email address!</span>
+          </div>
+        </div>
+        <p *ngIf="!userData.valid && userData.touched"> User Data is invalid! </p>
+        <div class="form-group">
+          <label for="secret">Secret Questions</label>
+          <select id="secret" class="form-control" [ngModel]="defaultQuestion" name="secret">
+            <option value="pet">Your first Pet?</option>
+            <option value="teacher">Your first teacher?</option>
+          </select>          
+        </div>
+        <div class="form-group">
+          <textarea name="questionAnswer" id="" rows="3" class="form-control" [(ngModel)]="answer">
+          </textarea>
+        </div>
+        <p> Your answer was: {{ answer }}</p>
+        <div class="radio" *ngFor="let eye of eyes">
+          <label>
+            <input type="radio" name="eyecolor" ngModel [value]="eye"> {{ eye }}
+          </label>
+        </div>
+        <button 
+          class="btn btn-primary" 
+          type="submit"
+          [disabled]="!f.valid">Submit
+        </button>
+      </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row" *ngIf="submitted">
+    <div class="col-xs-12">
+      <h3>Your Data</h3>
+      <p> Username: {{ user.username }}</p>
+      <p> Email: {{ user.email }}</p>
+      <p> Question: {{ user.question }}</p>
+      <p> Answer: {{ user.answer }} </p>
+      <p> Eye Color: {{ user.eyecolor }}</p>
+    </div>
+  </div>
+</div>

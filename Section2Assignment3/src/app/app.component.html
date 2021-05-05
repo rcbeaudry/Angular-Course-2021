@@ -1,0 +1,9 @@
+<button class = "btn btn=primary" (click)="onDisplayDetails()">Display Details</button>
+<p *ngIf="showDetails">Secret Password = secretpassword</p>
+<p 
+    *ngFor="let click of clicks; let i = index"
+    [ngStyle]="{'background-color': getColor(i)}"
+    [ngClass]="{logitem: i >= 4}"
+> 
+    {{ click }} 
+</p>

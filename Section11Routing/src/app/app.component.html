@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <ul class="nav nav-tabs">
+        <!-- user routerLink and not href because href will cause app to reload on click-->
+        <!-- routerLinkActive will apply a CSS class whenever a route is active -->
+        <!-- but, will also apply when that path is a subpath of an active route-->
+        <!-- so, the "/" will always be active, as it is always a subpath of an active route-->
+        <!-- routerLinkOptions will fix that, so it will be active only when full route is "/"-->
+        <li role="presentation" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/">Home</a></li>
+        <li role="presentation" routerLinkActive="active"><a routerLink="/servers">Servers</a></li>
+        <!-- can also property bind to an array of path elements -->
+        <li role="presentation" routerLinkActive="active"><a [routerLink]="['/users']">Users</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!-- Mark the place where we want Angular to load the component of the currently selected route -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

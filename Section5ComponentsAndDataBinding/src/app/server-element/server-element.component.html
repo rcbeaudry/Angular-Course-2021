@@ -1,0 +1,11 @@
+<!-- element is our custom property that was bound in main app component, so the object data could be
+     passed down here for display -->
+<div class="panel panel-default">
+    <div class="panel-heading">{{ element.name }}
+        <div class="panel-body">
+            <!-- This ng-content says inject whatever is between the component open/close in the calling -->
+            <!-- HTML, and stick it here -->
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

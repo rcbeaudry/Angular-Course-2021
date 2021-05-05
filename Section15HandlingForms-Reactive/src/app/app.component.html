@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!-- Use formGroup to tell Angular we don't want the default form, and we want to link to our form -->
+      <!-- The formControlName directives in the controls link them to our TS coded controls -->
+      <!-- We still need ngSubmit, but no need to pass form reference -->
+      <!-- CSS classes still added by Angular, so can style based on ng-touched, ng-valid, etc.-->
+      <!-- The ".get()" allows us to link to our TS object behind the scenes, so we can get values/state -->
+      <!-- If you nest formgroups, add a "div" around the HTML controls, and give it a FormGroupName directive-->
+      <!-- Also, if you nest form groups, the get() call needs to be get(group.control) -->
+      <!-- The formArrayName links an array of controls to a group in the HTML-->
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            formControlName="username"
+            class="form-control">
+            <span *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">
+              <span *ngIf="signupForm.get('username').errors['required']"
+              class="help-block">This field is required</span>
+              <span *ngIf="signupForm.get('username').errors['nameForbidden']"
+              class="help-block">That user name is forbidden</span>
+            </span>
+        </div>
+        <div class="form-group">
+          <label for="email">email</label>
+          <input
+            type="text"
+            id="email"
+            formControlName="email"
+            class="form-control">
+            <span *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched"
+            class="help-block">Please enter an email!</span>
+        </div>
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input
+              type="radio"
+              formControlName="gender"
+              [value]="gender">{{ gender }}
+          </label>
+        </div>
+        <div formArrayName="hobbies">
+          <h4> Your Hobbies</h4>
+          <button class="btn btn-default" type="button" (click)="onAddHobby()">Add A Hobby</button>
+          <div class="form-group" *ngFor="let hobbyControl of controls; let i=index">
+            <input type="text" class="form-control" [formControlName]="i">
+          </div>
+        </div>
+        <span *ngIf="!signupForm.valid && signupForm.touched"
+        class="help-block">Please fill out the form!</span>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

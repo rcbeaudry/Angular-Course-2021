@@ -1,0 +1,13 @@
+<!-- String interpolation for text in p tag {{}} -->
+<!-- ngStyle directive does not need square brackets, but we are using property binding-->
+<!-- We want to bind to a property on the directive that also happens to be called ngStyle-->
+<!-- ngStyle and ngClas expression is TS key value pairs-->
+<!-- Instead of 'background-color', we could have used backgroundColor-->
+<!-- Also, because expression is TS, we can call methods instead of hardcoding value (getColor())-->
+
+<p 
+    [ngStyle]="{'background-color': getColor()}"
+    [ngClass]="{online: serverStatus === 'online'}"
+>
+    The {{ 'Server' }} with ID {{ serverID }} is {{ getServerStatus() }}
+</p>

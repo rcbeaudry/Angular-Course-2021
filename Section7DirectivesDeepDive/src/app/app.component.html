@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <button
+        class="btn btn-primary"
+        (click)="onlyOdd = !onlyOdd">Only show odd numbers</button>
+      <br><br>
+      <ul class="list-group">
+        
+        <!-- review of attribute direcitves ngClass and ngStyle, and -->
+        <!-- structural directives ngFor and ngIf -->
+        <div *ngIf="onlyOdd">
+        <li
+          class="list-group-item"
+          [ngClass]="{odd: odd %2 !== 0}"
+          [ngStyle]="{backgroundColor: odd %2 !== 0? 'yellow' : 'transparent'}"
+          *ngFor="let odd of oddNumbers">
+          {{odd}}
+        </li>
+        </div>
+
+<!-- 
+          <div *ngIf="!onlyOdd">
+          <li
+            class="list-group-item"
+            [ngClass]="{odd: even %2 !== 0}"
+            [ngStyle]="{backgroundColor: even %2 !== 0? 'yellow' : 'transparent'}"
+            *ngFor="let even of evenNumbers">
+            {{even}}
+          </li>
+        </div> 
+-->
+        <!-- use our own structural directive to show the even numbers -->
+        <div *appUnless="onlyOdd">
+          <li
+            class="list-group-item"
+            [ngClass]="{odd: even %2 !== 0}"
+            [ngStyle]="{backgroundColor: even %2 !== 0? 'yellow' : 'transparent'}"
+            *ngFor="let even of evenNumbers">
+            {{even}}
+          </li>
+        </div> 
+
+      </ul>
+      <!-- Use our new attribute directives to change style -->
+      <p appBasicHighlight>Styled with new directive!!</p>
+      <!-- Shortcut for property binding if you are passing a string-->
+      <!-- you can omit the square brackets if you also omit the single quotes-->
+      <!-- so [defaultColor]="'yellow'" is the same as defaultColor="yellow"-->
+      <!-- Not required, but be careful, as this masks property binding and makes -->
+      <!-- it look like the element has a built-in property, when it is really property binding-->
+      <p appBetterHighlight [defaultColor]="'yellow'" [highlightColor]="'red'">Styled with new directive!!</p>
+
+      <!-- ngSwitch is built-in, just adding to this section to learn it-->
+      <!-- better than a long list of ngIf -->
+      <div [ngSwitch]="value">
+        <p *ngSwitchCase="5">Value is 5</p>
+        <p *ngSwitchCase="10">Value is 10</p>
+        <p *ngSwitchCase="100">Value is 100</p>
+        <p *ngSwitchDefault>Value is Default</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-xs-12">
+        <!-- newServerName and newServerConent are two-way bound here-->
+      <p>Add new Servers or blueprints!</p>
+      <label>Server Name</label>
+      <input type="text" class="form-control" [(ngModel)]="newServerName">
+      <label>Server Content</label>
+      <input type="text" class="form-control" [(ngModel)]="newServerContent">
+      <!-- could have used <input type="text" class="form-control" #newServerCont> -->
+      <!-- newServerCont is a "local reference" refers to entire element, not just value-->
+      <!-- local references can be made to any element, not just input-->
+      <!-- can be used anywhere in HTML code, but not in TS code -->
+      <br>
+      <!-- click event on buttons will call methods that will trigger our custom emitters-->
+      <button
+        class="btn btn-primary"
+        (click)="onAddServer()">Add Server</button>
+      <button
+        class="btn btn-primary"
+        (click)="onAddBlueprint()">Add Server Blueprint</button>
+        <!-- for local reference, could have used (click)="onAddBlueprint(newServerCont)" -->
+        <!-- TS code could use newServerCont.value, as the reference is to the entire element, not just the value-->
+    </div>
+  </div>

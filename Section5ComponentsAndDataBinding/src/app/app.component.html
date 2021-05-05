@@ -1,0 +1,28 @@
+<!-- serverCreated and blueprintCreated are custom events emitted by the controller component
+      to let us know something has changed ... $event is just the data object sent out from the event-->
+<div class="container">
+  <app-controller 
+    (serverCreated)="onServerAdded($event)"
+    (blueprintCreated)="onBlueprintAdded($event)"
+    >
+  </app-controller>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- srvElement is a custom property (with an alias) that we can bind to so that we can pass
+           the element object down to the app-server-element, to be displayed by it-->
+        <app-server-element 
+          *ngFor="let serverElement of serverElements"
+          [srvElement]="serverElement">
+            <!-- Normally, angular discards anything betweeen component open/close tags-->
+            <!-- But, our component has an ng-content directive, so wherever that ng-content -->
+            <!-- directive is, this HTML below will be placed -->
+            <!-- Also, need to use "serverElement", as that is the "let" above for the ngFor-->
+            <p>
+              <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
+              <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
+            </p>
+        </app-server-element>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+.container {
+  margin-top: 30px;
+}
+
+/* only want to have red border around inputs that are invalid, but also have been clicked into */
+/* ng-invalid and ng-touched are classes added by Angular to our elements, so we can take advantage of them*/
+input.ng-invalid.ng-touched
+{
+  border: 1px solid red;
+}
